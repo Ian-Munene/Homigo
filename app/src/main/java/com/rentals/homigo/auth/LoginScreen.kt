@@ -4,6 +4,7 @@ package com.rentals.homigo.auth
 import android.widget.Toast
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Email
 import androidx.compose.material.icons.filled.Lock
@@ -13,6 +14,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color.Companion.White
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.text.input.ImeAction
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -68,7 +71,8 @@ fun LoginScreen(navController: NavController, userAuthViewModel: UserAuthViewMod
                         onValueChange = { email = it },
                         label = { Text("Email", color = StormBlue) },
                         leadingIcon = { Icon(Icons.Default.Email, contentDescription = "Email", tint = StormBlue) },
-                        modifier = Modifier.fillMaxWidth()
+                        modifier = Modifier.fillMaxWidth(),
+                        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email, imeAction = ImeAction.Next)
                     )
 
                     Spacer(modifier = Modifier.height(16.dp))
@@ -79,8 +83,13 @@ fun LoginScreen(navController: NavController, userAuthViewModel: UserAuthViewMod
                         label = { Text("Password", color = StormBlue) },
                         leadingIcon = { Icon(Icons.Default.Lock, contentDescription = "Password", tint = StormBlue) },
                         visualTransformation = PasswordVisualTransformation(),
-                        modifier = Modifier.fillMaxWidth()
+                        modifier = Modifier.fillMaxWidth(),
+                        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password, imeAction = ImeAction.Done)
                     )
+                    Spacer(modifier = Modifier.height(10.dp))
+                    TextButton(onClick = {
+                        navController.navigate("forgot_password")
+                    }) {Text("Forgot password?") }
 
                     Spacer(modifier = Modifier.height(24.dp))
 
@@ -119,10 +128,10 @@ fun LoginScreen(navController: NavController, userAuthViewModel: UserAuthViewMod
                                     return@Button
                                 }
 
-                                if (email == "muneneian1964@gmail.com") {
+                                if (email == "nesh@gmail.com") {
                                     userAuthViewModel.login(email, password) { success, _ ->
                                         if (success) {
-                                            navController.navigate(ROUTE_LANDLORD_DASHBOARD)
+                                            navController.navigate("landlord_dashboard")
                                         } else {
                                             Toast.makeText(context, "Landlord login failed", Toast.LENGTH_LONG).show()
                                         }

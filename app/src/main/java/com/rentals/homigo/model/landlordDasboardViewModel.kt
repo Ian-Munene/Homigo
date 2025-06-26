@@ -155,5 +155,35 @@ class LandlordDashboardViewModel : ViewModel() {
             })
     }
 
+    fun deleteApartmentUnit(unitId: String) {
+        val dbRef = FirebaseDatabase.getInstance().getReference("available_units").child(unitId)
+        dbRef.removeValue()
+    }
+
+    fun deleteOccupiedUnit(unitId: String) {
+        val dbRef = FirebaseDatabase.getInstance().getReference("occupied_units").child(unitId)
+        dbRef.removeValue()
+    }
+
+    fun editApartmentUnit(unitId: String, updatedRent: String, updatedType: String) {
+        val dbRef = FirebaseDatabase.getInstance()
+            .getReference("available_units")
+            .child(unitId)
+
+        val updates = mapOf<String, Any>(
+            "rentAmount" to updatedRent,
+            "unitType" to updatedType
+        )
+
+        dbRef.updateChildren(updates)
+            .addOnSuccessListener {
+                Log.d("Firebase", "Apartment updated successfully")
+            }
+            .addOnFailureListener {
+                Log.e("Firebase", "Failed to update apartment: ${it.message}")
+            }
+    }
+
+
 
 }

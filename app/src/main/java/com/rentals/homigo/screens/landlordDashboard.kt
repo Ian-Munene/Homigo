@@ -1,6 +1,5 @@
 package com.rentals.homigo.screens
 
-
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
@@ -18,7 +17,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
-import com.rentals.homigo.Navigation.ROUTE_ADD_APARTMENT
+import com.rentals.homigo.data.ApartmentUnit
 import com.rentals.homigo.model.LandlordDashboardViewModel
 import com.rentals.homigo.model.MaintenanceRequestViewModel
 import com.rentals.homigo.ui.theme.DeepSapphire
@@ -37,6 +36,11 @@ fun LandlordDashboardScreen(
     val availableUnits by landlordViewModel.availableUnits.collectAsState()
     val occupiedUnits by landlordViewModel.occupiedUnits.collectAsState()
 
+    var showEditDialog by remember { mutableStateOf(false) }
+    var selectedUnit by remember { mutableStateOf<ApartmentUnit?>(null) }
+    var editedRent by remember { mutableStateOf("") }
+    var editedType by remember { mutableStateOf("") }
+
     LaunchedEffect(Unit) {
         landlordViewModel.loadDashboardData()
         landlordViewModel.loadAvailableUnits()
@@ -49,7 +53,7 @@ fun LandlordDashboardScreen(
     Scaffold(
         floatingActionButton = {
             FloatingActionButton(
-                onClick = { navController.navigate(ROUTE_ADD_APARTMENT) },
+                onClick = { navController.navigate("add_unit") },
                 containerColor = headerColor,
                 contentColor = White
             ) {
@@ -96,8 +100,29 @@ fun LandlordDashboardScreen(
                                 Text("Unit Number: ${unit.unitNumber ?: "N/A"}")
                                 Text("Type: ${unit.unitType ?: "N/A"}")
                                 Text("Rent: KES ${unit.rentAmount ?: "N/A"}")
+
+                                Row(
+                                    horizontalArrangement = Arrangement.spacedBy(8.dp),
+                                    modifier = Modifier.padding(top = 8.dp)
+                                ) {
+                                    Button(onClick = {
+                                        selectedUnit = unit
+                                        editedRent = (unit.rentAmount ?: "").toString()
+                                        editedType = unit.unitType ?: ""
+                                        showEditDialog = true
+                                    }) {
+                                        Text("Edit")
+                                    }
+
+                                    Button(onClick = {
+                                        landlordViewModel.deleteApartmentUnit(unit.unitId)
+                                    }) {
+                                        Text("Delete")
+                                    }
+                                }
                             }
                         }
+
                     }
 
                     // function to load occupied units
@@ -111,8 +136,16 @@ fun LandlordDashboardScreen(
                             InfoCard {
                                 Text("Unit Number: ${unit.unitNumber ?: "N/A"}")
                                 Text("Tenant Name: ${unit.tenantName ?: "N/A"}")
+
+                                Button(onClick = {
+                                    landlordViewModel.deleteOccupiedUnit(unit.unitId)
+                                }, modifier = Modifier.padding(top = 8.dp)) {
+                                    Text("Delete")
+                                }
                             }
                         }
+
+
                     }
 
                     // Maintenance Requests
@@ -137,6 +170,44 @@ fun LandlordDashboardScreen(
             }
         }
     }
+
+    if (showEditDialog && selectedUnit != null) {
+        AlertDialog(
+            onDismissRequest = { showEditDialog = false },
+            confirmButton = {
+                Button(onClick = {
+                    landlordViewModel.editApartmentUnit(
+                        unitId = selectedUnit!!.unitId,
+                        updatedRent = editedRent,
+                        updatedType = editedType)
+                    showEditDialog = false
+                }) {
+                    Text("Save")
+                }
+            },
+            dismissButton = {
+                Button(onClick = { showEditDialog = false }) {
+                    Text("Cancel")
+                }
+            },
+            title = { Text("Edit Apartment Unit") },
+            text = {
+                Column {
+                    OutlinedTextField(
+                        value = editedRent,
+                        onValueChange = { editedRent = it },
+                        label = { Text("Rent") }
+                    )
+                    OutlinedTextField(
+                        value = editedType,
+                        onValueChange = { editedType = it },
+                        label = { Text("Type") }
+                    )
+                }
+            }
+        )
+    }
+
 }
 
 @Composable

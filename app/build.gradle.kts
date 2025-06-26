@@ -6,11 +6,11 @@ plugins {
 }
 
 android {
-    namespace = "com.example.homigo"
+    namespace = "com.rentals.homigo"
     compileSdk = 35
 
     defaultConfig {
-        applicationId = "com.example.homigo"
+        applicationId = "com.rentals.homigo"
         minSdk = 24
         targetSdk = 35
         versionCode = 1
@@ -68,6 +68,16 @@ dependencies {
     implementation ("androidx.lifecycle:lifecycle-viewmodel-compose:2.7.0")
     //Navigation
     implementation ("androidx.navigation:navigation-compose:2.7.7")
+    //okhttp
+    implementation("com.squareup.okhttp3:okhttp:4.12.0")
+    implementation("com.squareup.retrofit2:retrofit:2.9.0")
+    implementation("com.squareup.retrofit2:converter-gson:2.9.0")
+    implementation("com.squareup.okhttp3:logging-interceptor:4.12.0")
+    implementation("com.google.firebase:firebase-functions-ktx")
+
+
+
+
 
 
 }

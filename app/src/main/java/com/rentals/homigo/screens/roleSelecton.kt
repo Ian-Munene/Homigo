@@ -1,6 +1,5 @@
 package com.rentals.homigo.screens
 
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.*
@@ -9,7 +8,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -38,7 +36,7 @@ fun HomeScreen(navController: NavController) {
 
         // Button for tenant
         Button(
-            onClick = { navController.navigate(ROUTE_TENANT_SIGNUP) },
+            onClick = { navController.navigate("signup") },
             modifier = Modifier.fillMaxWidth(),
             colors = ButtonDefaults.buttonColors(containerColor = DeepSapphire)
         ) {
@@ -49,7 +47,7 @@ fun HomeScreen(navController: NavController) {
 
         // Button for landlord
         Button(
-            onClick = { navController.navigate(ROUTE_LOGIN) },
+            onClick = { navController.navigate("login") },
             modifier = Modifier.fillMaxWidth(),
             colors = ButtonDefaults.buttonColors(containerColor = DeepSapphire)
         ) {

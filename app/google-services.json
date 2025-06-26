@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "906042909691",
+    "project_id": "homigo-6e0d2",
+    "storage_bucket": "homigo-6e0d2.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:906042909691:android:6a9ce4e0d92f1afeb0615e",
+        "android_client_info": {
+          "package_name": "com.rentals.homigo"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB14zE-QgitHlPmD_LG-YERGJUo7c-ogOY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

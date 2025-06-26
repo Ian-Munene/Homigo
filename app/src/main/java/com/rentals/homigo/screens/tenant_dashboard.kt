@@ -16,7 +16,6 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
-import com.rentals.homigo.Navigation.ROUTE_PAYMENT_SCREEN
 import com.rentals.homigo.model.TenantViewModel
 import com.rentals.homigo.ui.theme.DeepSapphire
 import com.rentals.homigo.ui.theme.StormBlue
@@ -87,6 +86,7 @@ fun TenantDashboardScreen(
                         verticalArrangement = Arrangement.spacedBy(10.dp)
                     ) {
                         Text("👤 Full Name: ${tenant.fullName}", color = StormBlue)
+                        Text("Email: ${tenant.email}", color= StormBlue)
                         Text("🏢 Unit Number: ${tenant.unitNumber}", color = StormBlue)
                         Text("📅 Move-In Date: ${tenant.moveInDate}", color = StormBlue)
                     }
@@ -130,7 +130,7 @@ fun TenantDashboardScreen(
             Spacer(modifier = Modifier.height(16.dp))
 
             Button(
-                onClick = { navController.navigate(ROUTE_PAYMENT_SCREEN) },
+                onClick = { navController.navigate("payment_screen") },
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(55.dp),

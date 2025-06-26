@@ -5,6 +5,7 @@ import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowDropDown
 import androidx.compose.material.icons.filled.Call
@@ -30,12 +31,13 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.text.input.ImeAction
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
-import com.rentals.homigo.Navigation.ROUTE_LOGIN
 import com.rentals.homigo.model.UserAuthViewModel
 import com.rentals.homigo.ui.theme.DeepSapphire
 import com.rentals.homigo.ui.theme.StormBlue
@@ -108,7 +110,8 @@ fun SignupScreen(navController: NavController, userAuthViewModel: UserAuthViewMo
                         onValueChange = { fullName = it },
                         label = { Text("Full Name",color = StormBlue) },
                         leadingIcon = { Icon(Icons.Default.Person, contentDescription = "Full name",tint = StormBlue) },
-                        modifier = Modifier.fillMaxWidth()
+                        modifier = Modifier.fillMaxWidth(),
+                        keyboardOptions = KeyboardOptions.Default.copy(imeAction = ImeAction.Next)
                     )
 
                     Spacer(modifier = Modifier.height(12.dp))
@@ -157,7 +160,8 @@ fun SignupScreen(navController: NavController, userAuthViewModel: UserAuthViewMo
                         onValueChange = { phoneNumber = it },
                         label = { Text("Phone Number",color = StormBlue) },
                         leadingIcon = { Icon(Icons.Default.Call, contentDescription = "Phone Number",tint = StormBlue) },
-                        modifier = Modifier.fillMaxWidth()
+                        modifier = Modifier.fillMaxWidth(),
+                        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Phone, imeAction = ImeAction.Next)
                     )
 
                     Spacer(modifier = Modifier.height(12.dp))
@@ -167,7 +171,8 @@ fun SignupScreen(navController: NavController, userAuthViewModel: UserAuthViewMo
                         onValueChange = { moveInDate = it },
                         label = { Text("Move-In Date (DD/MM/YYYY)",color = StormBlue) },
                         leadingIcon = { Icon(Icons.Default.DateRange, contentDescription = "Move in Date",tint = StormBlue) },
-                        modifier = Modifier.fillMaxWidth()
+                        modifier = Modifier.fillMaxWidth(),
+                        keyboardOptions = KeyboardOptions.Default.copy(imeAction = ImeAction.Next)
                     )
 
                     Spacer(modifier = Modifier.height(12.dp))
@@ -177,7 +182,8 @@ fun SignupScreen(navController: NavController, userAuthViewModel: UserAuthViewMo
                         onValueChange = { email = it },
                         label = { Text("Email",color = StormBlue)},
                         leadingIcon = { Icon(Icons.Default.Email, contentDescription = "Email",tint = StormBlue) },
-                        modifier = Modifier.fillMaxWidth()
+                        modifier = Modifier.fillMaxWidth(),keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email, imeAction = ImeAction.Next)
+
                     )
 
                     Spacer(modifier = Modifier.height(12.dp))
@@ -188,7 +194,8 @@ fun SignupScreen(navController: NavController, userAuthViewModel: UserAuthViewMo
                         label = { Text("Password",color = StormBlue) },
                         leadingIcon = { Icon(Icons.Default.Lock, contentDescription = "Password",tint = StormBlue) },
                         visualTransformation = PasswordVisualTransformation(),
-                        modifier = Modifier.fillMaxWidth()
+                        modifier = Modifier.fillMaxWidth(),
+                        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password, imeAction = ImeAction.Done)
                     )
 
                     Spacer(modifier = Modifier.height(20.dp))
@@ -203,7 +210,7 @@ fun SignupScreen(navController: NavController, userAuthViewModel: UserAuthViewMo
                             }
 
                             if (availableUnits.contains(selectedUnit)) {
-                                userAuthViewModel.signup(fullName, selectedUnit, phoneNumber, moveInDate, email, password)
+                                userAuthViewModel.registerUser(fullName, selectedUnit, phoneNumber, moveInDate, email, password)
                             } else {
                                 Toast.makeText(
                                     context,
@@ -236,7 +243,7 @@ fun SignupScreen(navController: NavController, userAuthViewModel: UserAuthViewMo
                         text = "Already have an account? Click Login",
                         style = MaterialTheme.typography.bodyMedium.copy(color = StormBlue),
                         modifier = Modifier
-                            .clickable { navController.navigate(ROUTE_LOGIN) }
+                            .clickable { navController.navigate("login") }
                             .padding(top = 8.dp)
                     )
                 }

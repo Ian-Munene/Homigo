@@ -107,7 +107,7 @@ fun AddApartmentScreen(
             ) {
                 Icon(Icons.Default.Check, contentDescription = "Save",tint = Color.White)
                 Spacer(modifier = Modifier.width(8.dp))
-                Text("Save Apartment", color = Color.White)
+                Text("Save Unit", color = Color.White)
             }
         }
     }

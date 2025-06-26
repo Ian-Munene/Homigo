@@ -39,7 +39,7 @@ class UserAuthViewModel : ViewModel() {
     private val _availableUnits = MutableStateFlow<List<String>>(emptyList())
     val availableUnits: StateFlow<List<String>> = _availableUnits
 
-    fun signup(
+    fun registerUser(
         fullName: String,
         unitNumber: String,
         phoneNumber: String,
